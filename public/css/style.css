@@ -1,0 +1,15 @@
+h1 {
+  text-align: center;
+  color: blue;
+}
+
+.colors div {
+  border: 1px solid black;
+  height: 100px;
+  width: 70px;
+}
+
+.colors {
+  display: flex;
+  justify-content: space-around;
+}
