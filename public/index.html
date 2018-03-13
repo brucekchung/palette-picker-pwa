@@ -2,26 +2,43 @@
 <html>
 <head>
   <title>Palette-Picker</title>
-  <link href="./css/style.css" type="text/css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:bold' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+  <link href="css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-  <section>
-    <h1>Palette Picker</h1>
+  <section class="palette">
+    <header>
+      <h1>Palette Picker</h1>
+    </header>
     <div class="colors">
-      <div class="color-one">#FFFFFF</div>
-      <div class="color-two">#FFFFFF</div>
-      <div class="color-three">#FFFFFF</div>
-      <div class="color-four">#FFFFFF</div>
-      <div class="color-five">#FFFFFF</div>
+      <div class="color one"><span>#FFFFFF</span></div>
+      <div class="color two"><span>#FFFFFF</span></div>
+      <div class="color three"><span>#FFFFFF</span></div>
+      <div class="color four"><span>#FFFFFF</span></div>
+      <div class="color five"><span>#FFFFFF</span></div>
     </div>
     <button class="generate-palette">Generate Palette!</button>
-    <select>
-      <option value="volvo">Volvo</option>
-    </select>
-    <input placeholder="palette name">
-    <button class="save-palette">Save Palette</button>
-
+    <div class="palette-controls">
+      <select>
+        <!-- <option value="volvo">Volvo</option> -->
+      </select>
+      <input placeholder="palette name">
+      <button class="save-palette">Save Palette</button>
+    </div>
   </section>
+  <section class="project-controls">
+    <h3>Create new projects:</h3>
+    <div>
+      <input placeholder="new project name">
+      <button class="save-project">Save Project</button>
+    </div>
+  </section>
+  <section class="projects">
+    <!-- projects -->
+  </section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="./js/script.js"></script>
 </body>
 </html>
