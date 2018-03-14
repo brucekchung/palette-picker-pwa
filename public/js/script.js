@@ -2,8 +2,11 @@ window.onload = () => setRandomColor()
 
 $('.generate-palette').on('click', setRandomColor)
 $('.save-project').on('click', saveProject, addProjectToMenu)
+$('.save-palette').on('click', savePalette)
 
-function getRandomColor() {
+const colorStorage = { current: [] }
+
+function generateRandomColor() {
   const letters = '0123456789ABCDEF'
   let color = '#'
 
@@ -18,15 +21,14 @@ function setRandomColor() {
   const allColors = [$('.one'), $('.two'), $('.three'), $('.four'), $('.five')]
 
   allColors.forEach(color => {
-    const randomColor = getRandomColor()
+    const randomColor = generateRandomColor()
 
     color.css('background-color', randomColor)
     color.children('span').text(randomColor)
   })
 }
 
-function saveProject(e) {
-  e.preventDefault()
+function saveProject() {
   const project = $(this).parent().children('input').val()
 
   fetch('http://localhost:3000/api/v1/projects', {
@@ -41,7 +43,11 @@ function addProjectToMenu() {
   const project = $(this).parent().children('input').val()
 
   menu.append(`<option value=${project}>${project}</option>`)
-
 } 
 
+function savePalette() {
+  const currentProject = $(this).parent('div').find(':selected').text()
+  console.log('current: ', currentProject)
 
+  //send to backend, along with palette colors
+}
