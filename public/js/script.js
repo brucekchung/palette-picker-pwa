@@ -1,7 +1,7 @@
 window.onload = () => setRandomColor()
 
 $('.generate-palette').on('click', setRandomColor)
-$('.save-project').on('click', saveProject)
+$('.save-project').on('click', saveProject, addProjectToMenu)
 
 function getRandomColor() {
   const letters = '0123456789ABCDEF'
@@ -28,7 +28,6 @@ function setRandomColor() {
 function saveProject(e) {
   e.preventDefault()
   const project = $(this).parent().children('input').val()
-  console.log('project: ', project)
 
   fetch('http://localhost:3000/api/v1/projects', {
     method: 'POST',
@@ -36,5 +35,13 @@ function saveProject(e) {
     headers: {'Content-Type': 'application/json'},
   })
 }
+
+function addProjectToMenu() {
+  const menu = $(this).parents('body').find('#saved-palettes')
+  const project = $(this).parent().children('input').val()
+
+  menu.append(`<option value=${project}>${project}</option>`)
+
+} 
 
 
