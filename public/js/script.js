@@ -5,7 +5,8 @@ $('.save-project').on('click', saveProject, addProjectToMenu)
 $('.save-palette').on('click', savePalette)
 $('.color').on('click', toggleLock)
 
-const colorStore = { current: [] }
+const colorStore = { current: [{locked: false},{locked: false},{locked: false},{locked: false},{locked: false}] }
+
 
 function generateRandomColor() {
   const letters = '0123456789ABCDEF'
@@ -21,12 +22,15 @@ function generateRandomColor() {
 function setRandomColor() {
   const allColors = [$('.one'), $('.two'), $('.three'), $('.four'), $('.five')]
 
-  allColors.forEach(color => {
+  allColors.forEach((color, i) => {
     const randomColor = generateRandomColor()
 
-    color.css('background-color', randomColor)
-    color.children('span').text(randomColor)
-  })
+    if (!colorStore.current[i].locked) {
+      colorStore.current[i] = { randomColor, locked: false }
+      color.css('background-color', randomColor)
+      color.children('span').text(randomColor)
+    }
+  }) 
 }
 
 function saveProject() {
@@ -50,15 +54,14 @@ function savePalette() {
   const currentProject = $(this).parent('div').find(':selected').text()
   console.log('current: ', currentProject)
 
-  //send to backend, along with palette colors
-
-  //handling palette colors?
-  //find a way to send to colorStore
-  //how to handle locked?
 }
 
 function toggleLock() {
   const selectedColor = $(this).find('img').toggleClass('hidden')
+  const color = $(this).closest('div').children('span').text()
 
+  colorStore.current.forEach(item => {
+    if (item.randomColor === color) item.locked = !item.locked
+  })
 }
 
