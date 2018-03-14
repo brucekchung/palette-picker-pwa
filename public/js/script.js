@@ -3,8 +3,9 @@ window.onload = () => setRandomColor()
 $('.generate-palette').on('click', setRandomColor)
 $('.save-project').on('click', saveProject, addProjectToMenu)
 $('.save-palette').on('click', savePalette)
+$('.color').on('click', toggleLock)
 
-const colorStorage = { current: [] }
+const colorStore = { current: [] }
 
 function generateRandomColor() {
   const letters = '0123456789ABCDEF'
@@ -50,4 +51,14 @@ function savePalette() {
   console.log('current: ', currentProject)
 
   //send to backend, along with palette colors
+
+  //handling palette colors?
+  //find a way to send to colorStore
+  //how to handle locked?
 }
+
+function toggleLock() {
+  const selectedColor = $(this).find('img').toggleClass('hidden')
+
+}
+
