@@ -19,13 +19,22 @@ function setRandomColor() {
 
   allColors.forEach(color => {
     const randomColor = getRandomColor()
+
     color.css('background-color', randomColor)
     color.children('span').text(randomColor)
   })
 }
 
-function saveProject() {
-  console.log('saved??..')
+function saveProject(e) {
+  e.preventDefault()
+  const project = $(this).parent().children('input').val()
+  console.log('project: ', project)
+
+  fetch('http://localhost:3000/api/v1/projects', {
+    method: 'POST',
+    body: JSON.stringify({ project }),
+    headers: {'Content-Type': 'application/json'},
+  })
 }
 
 
