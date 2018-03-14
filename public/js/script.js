@@ -5,7 +5,7 @@ $('.save-project').on('click', saveProject, addProjectToMenu)
 $('.save-palette').on('click', savePalette)
 $('.color').on('click', toggleLock)
 
-const colorStore = { current: [{locked: false},{locked: false},{locked: false},{locked: false},{locked: false}] }
+const colorStore = [{locked: false},{locked: false},{locked: false},{locked: false},{locked: false}]
 
 
 function generateRandomColor() {
@@ -25,8 +25,8 @@ function setRandomColor() {
   allColors.forEach((color, i) => {
     const randomColor = generateRandomColor()
 
-    if (!colorStore.current[i].locked) {
-      colorStore.current[i] = { randomColor, locked: false }
+    if (!colorStore[i].locked) {
+      colorStore[i] = { randomColor, locked: false }
       color.css('background-color', randomColor)
       color.children('span').text(randomColor)
     }
@@ -52,16 +52,28 @@ function addProjectToMenu() {
 
 function savePalette() {
   const currentProject = $(this).parent('div').find(':selected').text()
-  console.log('current: ', currentProject)
+  const paletteName = $(this).parent('div').children('input').val()
+  const palette = colorStore.map(color => color.randomColor)
 
+  fetch('http://localhost:3000/api/v1/projects', {
+    method: 'PUT',
+    body: JSON.stringify({ 
+      project: currentProject,
+      paletteName,
+      palette 
+    }),
+    headers: {'Content-Type': 'application/json'},
+  })
 }
 
 function toggleLock() {
   const selectedColor = $(this).find('img').toggleClass('hidden')
   const color = $(this).closest('div').children('span').text()
 
-  colorStore.current.forEach(item => {
+  colorStore.forEach(item => {
     if (item.randomColor === color) item.locked = !item.locked
   })
 }
+
+
 

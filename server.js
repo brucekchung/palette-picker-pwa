@@ -17,9 +17,14 @@ app.post('/api/v1/projects', (req, res) => {
   const { project } = req.body
   app.locals.projects.push(project)
 
-  console.log('backend: ', app.locals.projects)
   res.status(201)
 })
 
-//app.put to edit
+app.put('/api/v1/projects', (req, res) => {
+  const { project, paletteName, palette } = req.body
+  console.log('proj, pal: ', project, paletteName, palette)
+  //need to edit resource
+  res.status(201)
+})
+
 //app.delete 
