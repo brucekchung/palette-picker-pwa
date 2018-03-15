@@ -18,13 +18,23 @@ const colorStore = [
 ]
 
 async function loadProjects() {
-  const projects = await fetch('/api/v1/projects')
+  const rawProjects = await fetch('/api/v1/projects')
+  const projects = await rawProjects.json()
 
-  console.log('projects: ', await projects.json())
-  //load into options
-  //load into display
+  projects.forEach(project => {
+    const name = project.name
+
+    $('#saved-palettes').append(`<option value=${name}>${name}</option>`)
+  })
+
+  renderProjects(projects)
 }
 
+function renderProjects(projectData) {
+  projectData.forEach(project => {
+    $('.projects').append(`<h2>${project.name}</h2>`)
+  })
+}
 
 function generateRandomColor() {
   const letters = '0123456789ABCDEF'
