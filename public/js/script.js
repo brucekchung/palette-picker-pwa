@@ -1,11 +1,29 @@
-window.onload = () => setRandomColor()
+window.onload = () => {
+  setRandomColor()
+  loadProjects()
+}
 
 $('.generate-palette').on('click', setRandomColor)
-$('.save-project').on('click', saveProject, addProjectToMenu)
+$('.save-project').on('click', saveProject)
+$('.save-project').on('click', addProjectToMenu)
 $('.save-palette').on('click', savePalette)
 $('.color').on('click', toggleLock)
 
-const colorStore = [{locked: false},{locked: false},{locked: false},{locked: false},{locked: false}]
+const colorStore = [
+  {locked: false},
+  {locked: false},
+  {locked: false},
+  {locked: false},
+  {locked: false} 
+]
+
+async function loadProjects() {
+  const projects = await fetch('/api/v1/projects')
+
+  console.log('projects: ', await projects.json())
+  //load into options
+  //load into display
+}
 
 
 function generateRandomColor() {
@@ -36,9 +54,9 @@ function setRandomColor() {
 function saveProject() {
   const project = $(this).parent().children('input').val()
 
-  fetch('http://localhost:3000/api/v1/projects', {
+  fetch('/api/v1/projects', {
     method: 'POST',
-    body: JSON.stringify({ project }),
+    body: JSON.stringify({ name: project }),
     headers: {'Content-Type': 'application/json'},
   })
 }
@@ -55,8 +73,8 @@ function savePalette() {
   const paletteName = $(this).parent('div').children('input').val()
   const palette = colorStore.map(color => color.randomColor)
 
-  fetch('http://localhost:3000/api/v1/projects', {
-    method: 'PUT',
+  fetch('http://localhost:3000/api/v1/palettes', {
+    method: 'POST',
     body: JSON.stringify({ 
       project: currentProject,
       paletteName,
