@@ -8,6 +8,7 @@ $('.save-project').on('click', saveProject)
 $('.save-project').on('click', addProjectToMenu)
 $('.save-palette').on('click', savePalette)
 $('.color').on('click', toggleLock)
+$('.projects').on('click', '.trash', deletePalette)
 
 const colorStore = [
   {locked: false},
@@ -32,7 +33,46 @@ async function loadProjects() {
 
 function renderProjects(projectData) {
   projectData.forEach(project => {
-    $('.projects').append(`<h2>${project.name}</h2>`)
+    $('.projects').append(`
+      <div id=${project.id} class="single-project">
+        <h2>${project.name}</h2>
+      </div>
+    `)
+  })
+
+  renderPalettes(projectData)
+}
+
+async function renderPalettes(projectData) {
+  const rawPalettes = await fetch('/api/v1/palettes')
+  const allPalettes = await rawPalettes.json()
+
+  allPalettes.forEach(palette => {
+    const project = $('.projects').find(`#${palette.project_id}`)
+    let current = 0
+
+    project.append(`
+      <div class=${palette.id}>
+        <h4>${palette.name}</h4>
+        <div class="color-small" style="background-color:${palette.colors[current++]}"></div>
+        <div class="color-small" style="background-color:${palette.colors[current++]}"></div>
+        <div class="color-small" style="background-color:${palette.colors[current++]}"></div>
+        <div class="color-small" style="background-color:${palette.colors[current++]}"></div>
+        <div class="color-small" style="background-color:${palette.colors[current++]}"></div>
+        <img class="trash" src="../assets/trash.png" alt="trashcan">
+      </div>
+    `)
+  })
+}
+
+function deletePalette() {
+  const targetPalette = $(this).parent('div')[0].className
+  console.log('deleted: ', targetPalette)
+
+  fetch('/api/v1/palettes', {
+    method: 'DELETE',
+    body: JSON.stringify({ id: targetPalette }),
+    headers: {'Content-Type': 'application/json'},
   })
 }
 
