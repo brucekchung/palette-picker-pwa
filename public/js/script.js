@@ -79,16 +79,22 @@ function addProjectToMenu() {
 } 
 
 function savePalette() {
-  const currentProject = $(this).parent('div').find(':selected').text()
-  const paletteName = $(this).parent('div').children('input').val()
-  const palette = colorStore.map(color => color.randomColor)
+  const project_id = $(this).parent('div').find(':selected').text()
+  const name = $(this).parent('div').children('input').val()
+  const colors = colorStore.map(color => color.randomColor)
+
+  //need to fetch individual project ID
+  const rawProjects = await fetch('/api/v1/projects')
+  const projects = await rawProjects.json()
+
+  const project_id = '1'
 
   fetch('http://localhost:3000/api/v1/palettes', {
     method: 'POST',
     body: JSON.stringify({ 
-      project: currentProject,
-      paletteName,
-      palette 
+      name,
+      colors,
+      project_id
     }),
     headers: {'Content-Type': 'application/json'},
   })
