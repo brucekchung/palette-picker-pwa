@@ -45,12 +45,16 @@ app.post('/api/v1/projects', (request, response) => {
 })
 
 app.post('/api/v1/palettes', (req, res) => {
-  const { project, paletteName, palette } = req.body
-  console.log('proj, pal: ', project, paletteName, palette)
-  //need to edit resource
-  database.('palettes').insert()
+  const palette = req.body
+  console.log('palette: ', palette)
 
-  res.status(201)
+  database('palettes').insert(palette, 'id')
+    .then(palette => {
+      res.status(201).json({ id: palette[0] })
+    })
+    .catch(error => {
+      res.status(500).json({ error })
+    })
 })
 
 //app.delete 
