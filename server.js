@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const environment = process.env.NODE_ENV || 'development'
-const configuration = require('../knexfile')[environment]
+const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
 app.locals.projects = []
@@ -16,14 +16,35 @@ app.listen(app.get('port'), () => {
   console.log(`listening on 3000`)
 })
 
-app.post('/api/v1/projects', (req, res) => {
-  const { project } = req.body
-  app.locals.projects.push(project)
-
-  res.status(201)
+app.get('/api/v1/projects', (req, res) => {
+  database('projects').select()
+    .then(project => {
+      res.status(200).json(project)
+    })
+    .catch(error => {
+      res.status(500).json({error}) 
+    })
 })
 
-app.put('/api/v1/projects', (req, res) => {
+app.post('/api/v1/projects', (request, response) => {
+  const project = request.body
+
+  if (!project) {
+    return response
+      .status(422)
+      .send({ error: `Missing project` })
+  }
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+})
+
+app.post('/api/v1/palettes', (req, res) => {
   const { project, paletteName, palette } = req.body
   console.log('proj, pal: ', project, paletteName, palette)
   //need to edit resource
