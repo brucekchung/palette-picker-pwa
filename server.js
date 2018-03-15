@@ -48,6 +48,8 @@ app.post('/api/v1/palettes', (req, res) => {
   const { project, paletteName, palette } = req.body
   console.log('proj, pal: ', project, paletteName, palette)
   //need to edit resource
+  database.('palettes').insert()
+
   res.status(201)
 })
 
