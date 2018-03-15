@@ -82,7 +82,8 @@ span {
 }
 
 .project-controls {
-  background: #D35400;
+  /*toasted orange:*/
+  background: #D35400; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,3 +102,34 @@ span {
   display: none;
 }
 
+.projects {
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.color-small {
+  display: inline-block;
+  border: 1px solid black;
+  height: 30px;
+  width: 30px;
+}
+
+.single-project {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px;
+  margin: 20px;
+  height: 200px;
+  width: 205px;
+  overflow: auto;
+}
+
+.single-project h2 {
+  text-align: center;
+}
+.single-project img {
+  height: 25px;
+  display: inline-block;
+}

@@ -44,9 +44,18 @@ app.post('/api/v1/projects', (request, response) => {
     })
 })
 
+app.get('/api/v1/palettes', (req, res) => {
+  database('palettes').select()
+    .then(palette => {
+      res.status(200).json(palette)
+    })
+    .catch(err => {
+      res.status(500).json({ err })
+    })
+})
+
 app.post('/api/v1/palettes', (req, res) => {
   const palette = req.body
-  console.log('palette: ', palette)
 
   database('palettes').insert(palette, 'id')
     .then(palette => {
@@ -57,4 +66,16 @@ app.post('/api/v1/palettes', (req, res) => {
     })
 })
 
-//app.delete 
+app.delete('/api/v1/palettes', (req, res) => {
+  const id = req.body.id
+
+  database('palettes').where('id', id).del()
+    .then(palette => {
+      res.status(202)
+    })
+    .catch(error => {
+      res.status(500).json({ error })
+    })
+})
+
+
