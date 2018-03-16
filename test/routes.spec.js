@@ -2,6 +2,9 @@ const chai = require('chai')
 const should = chai.should()
 const chaiHttp = require('chai-http')
 const server = require('../server')
+const environment = 'test'
+const configuration = require('../knexfile')[environment]
+const database = require('knex')(configuration)
 
 chai.use(chaiHttp)
 
@@ -31,6 +34,18 @@ describe('Client Routes', () => {
 })
 
 describe('API Routes', () => {
+  beforeEach(done => {
+    database.migrate.rollback()
+    .then(() => {
+      database.migrate.latest()
+      .then(() => {
+        return database.seed.run()
+        .then(() => {
+          done()
+        })
+      })
+    })
+  })
   
   describe('GET /api/v1/projects', () => {
     it('should return all of the projects', () => {
@@ -53,7 +68,21 @@ describe('API Routes', () => {
   })
 
   describe('POST /api/v1/projects', () => {
-    
+    //{ name: 'testProject' }
+    //{ name: 'workplz' }
+    it('should be able to add a project', () => {
+      return chai.request(server)
+        .post('/api/v1/projects')
+        .send({
+          name: 'testProject'
+        })
+        .then(res => {
+          res.should.have.status(201)
+        })
+        .catch(err => {
+          throw err
+        })
+    })
   })
 
   describe('GET /api/v1/palettes', () => {

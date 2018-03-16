@@ -28,8 +28,9 @@ app.get('/api/v1/projects', (req, res) => {
 
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body
+  console.log('project: ', project)
 
-  if (!project) {
+  if (!project.name) {
     return response
       .status(422)
       .send({ error: `Missing project` })

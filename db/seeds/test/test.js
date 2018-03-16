@@ -3,6 +3,9 @@ exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('projects').del()
     .then(() => {
+      return knex('palettes').del()
+    })
+    .then(() => {
       return knex('projects').insert([
         {id: 1, name: 'project1'},
         {id: 2, name: 'project2'},
