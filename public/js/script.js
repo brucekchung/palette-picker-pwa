@@ -67,7 +67,6 @@ async function renderPalettes(projectData) {
 
 function deletePalette() {
   const targetPalette = $(this).parent('div')[0].className
-  console.log('deleted: ', targetPalette)
 
   fetch('/api/v1/palettes', {
     method: 'DELETE',
@@ -110,7 +109,7 @@ function saveProject() {
     headers: {'Content-Type': 'application/json'},
   })
 
-  // loadProjects()
+  reloadPage()
 }
 
 function addProjectToMenu() {
@@ -138,8 +137,15 @@ async function savePalette() {
     }),
     headers: {'Content-Type': 'application/json'},
   })
-  //clear projects
-  //setTimeout(() => loadProjects(), 2000)
+
+  reloadPage()
+}
+
+function reloadPage() {
+  setTimeout(() => {
+    $('.projects').empty()
+    loadProjects()
+  }, 500)
 }
 
 function toggleLock() {

@@ -74,7 +74,6 @@ app.post('/api/v1/palettes', (req, res) => {
 
 app.delete('/api/v1/palettes', (req, res) => {
   const item = req.body
-  // console.log('item: ', item)
 
   database('palettes').where('id', item.id).del()
     .then(palette => {
