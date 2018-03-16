@@ -78,4 +78,4 @@ app.delete('/api/v1/palettes', (req, res) => {
     })
 })
 
-
+module.exports = app
