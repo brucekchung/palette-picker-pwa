@@ -68,16 +68,30 @@ describe('API Routes', () => {
   })
 
   describe('POST /api/v1/projects', () => {
-    //{ name: 'testProject' }
-    //{ name: 'workplz' }
     it('should be able to add a project', () => {
       return chai.request(server)
         .post('/api/v1/projects')
         .send({
+          id: 7,
           name: 'testProject'
         })
         .then(res => {
           res.should.have.status(201)
+        })
+        .catch(err => {
+          throw err
+        }) 
+    })
+
+    it('should return an error if data is missing', () => {
+      return chai.request(server)
+        .post('/api/v1/projects')
+        .send({
+          //name: 'test',
+          unnecessaryKey: 'stuff'
+        })
+        .then(res => {
+          res.should.have.status(422)
         })
         .catch(err => {
           throw err
@@ -106,7 +120,39 @@ describe('API Routes', () => {
   })
 
   describe('POST /api/v1/palettes', () => {
-    
+    it('should be able to post a palettes', () => {
+      return chai.request(server)
+        .post('/api/v1/palettes')
+        .send({
+          name: 'test-palette',
+          project_id: 1,
+          id: 5,
+          colors: ['#1E2D15','#997719','#92F35C','#185EA7','#E529EE']
+        })
+        .then(res => {
+          res.should.have.status(201)
+        })
+        .catch(err => {
+          throw err
+        })
+    })
+
+    it('should return an error if data is missing', () => {
+      return chai.request(server)
+        .post('/api/v1/palettes')
+        .send({
+          //name: 'test-palette',
+          project_id: 1,
+          id: 5,
+          colors: ['#1E2D15','#997719','#92F35C','#185EA7','#E529EE']
+        })
+        .then(res => {
+          res.should.have.status(422)
+        })
+        .catch(err => {
+          throw err
+        })
+    })
   })
 
   describe('DELETE /api/v1/palettes', () => {
