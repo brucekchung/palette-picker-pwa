@@ -77,6 +77,7 @@ describe('API Routes', () => {
         })
         .then(res => {
           res.should.have.status(201)
+          res.should.be.a('object')
         })
         .catch(err => {
           throw err
@@ -92,6 +93,7 @@ describe('API Routes', () => {
         })
         .then(res => {
           res.should.have.status(422)
+          res.should.be.a('object')
         })
         .catch(err => {
           throw err
@@ -131,6 +133,7 @@ describe('API Routes', () => {
         })
         .then(res => {
           res.should.have.status(201)
+          res.should.be.a('object')
         })
         .catch(err => {
           throw err
@@ -148,6 +151,7 @@ describe('API Routes', () => {
         })
         .then(res => {
           res.should.have.status(422)
+          res.should.be.a('object')
         })
         .catch(err => {
           throw err
@@ -156,6 +160,19 @@ describe('API Routes', () => {
   })
 
   describe('DELETE /api/v1/palettes', () => {
-    
+    it.skip('should be able to delete a palette', () => {
+      return chai.request(server)
+        .delete('/api/v1/palettes')
+        .send({
+          id: 1
+        })
+        .then(res => {
+          res.should.have.status(202)
+        })
+        .catch(err => {
+          throw err
+        })
+    })
   })
 })
+
