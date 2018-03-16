@@ -109,6 +109,8 @@ function saveProject() {
     body: JSON.stringify({ name: project }),
     headers: {'Content-Type': 'application/json'},
   })
+
+  // loadProjects()
 }
 
 function addProjectToMenu() {
@@ -136,6 +138,8 @@ async function savePalette() {
     }),
     headers: {'Content-Type': 'application/json'},
   })
+  //clear projects
+  //setTimeout(() => loadProjects(), 2000)
 }
 
 function toggleLock() {
