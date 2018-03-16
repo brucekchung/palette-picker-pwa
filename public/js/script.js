@@ -129,7 +129,7 @@ async function savePalette() {
   const colors = colorStore.map(color => color.randomColor)
   const project_id = projects.find(project => project.name === projectName).id
 
-  fetch('http://localhost:3000/api/v1/palettes', {
+  fetch('/api/v1/palettes', {
     method: 'POST',
     body: JSON.stringify({ 
       name,
