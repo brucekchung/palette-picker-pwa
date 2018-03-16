@@ -86,7 +86,23 @@ describe('API Routes', () => {
   })
 
   describe('GET /api/v1/palettes', () => {
-    
+    it('should return all the palettes', () => {
+      return chai.request(server)
+        .get('/api/v1/palettes')
+        .then(res => {
+          res.should.have.status(200)
+          res.body.length.should.equal(4)
+          res.body.should.be.a('array')
+          res.body[0].should.have.property('name')
+          res.body[0].name.should.equal('warm colors')          
+          res.body[0].should.have.property('colors')
+          res.body[0].colors.should.be.a('array')
+          res.body[0].should.have.property('project_id')
+          res.body[0].project_id.should.equal(1)          
+          res.body[0].should.have.property('id')
+          res.body[0].id.should.equal(1)          
+        })
+    })
   })
 
   describe('POST /api/v1/palettes', () => {
