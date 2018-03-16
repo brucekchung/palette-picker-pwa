@@ -28,7 +28,6 @@ app.get('/api/v1/projects', (req, res) => {
 
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body
-  console.log('project: ', project)
 
   if (!project.name) {
     return response
@@ -57,6 +56,12 @@ app.get('/api/v1/palettes', (req, res) => {
 
 app.post('/api/v1/palettes', (req, res) => {
   const palette = req.body
+
+  if (!palette.name) {
+    return res
+      .status(422)
+      .send({ error: `Missing name` })
+  }
 
   database('palettes').insert(palette, 'id')
     .then(palette => {
