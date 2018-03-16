@@ -60,7 +60,7 @@ app.post('/api/v1/palettes', (req, res) => {
   if (!palette.name) {
     return res
       .status(422)
-      .send({ error: `Missing name` })
+      .send({ error: 'Missing name' })
   }
 
   database('palettes').insert(palette, 'id')
@@ -73,9 +73,10 @@ app.post('/api/v1/palettes', (req, res) => {
 })
 
 app.delete('/api/v1/palettes', (req, res) => {
-  const id = req.body.id
+  const item = req.body
+  // console.log('item: ', item)
 
-  database('palettes').where('id', id).del()
+  database('palettes').where('id', item.id).del()
     .then(palette => {
       res.status(202)
     })
