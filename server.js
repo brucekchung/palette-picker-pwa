@@ -14,7 +14,7 @@ const requireHTTPS = (req, res, next) => {
 
 
 app.locals.projects = [] //stage1 storage
-
+app.enable('trust proxy')
 app.use(express.static('public')) //middleware - get request for '/' runs through public folder
 app.use(bodyParser.json()) //middleware - runs req to break out body into readable format
 if (process.env.NODE_ENV === 'production') { app.use(requireHTTPS); }
