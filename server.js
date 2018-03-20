@@ -10,7 +10,7 @@ app.locals.projects = [] //stage1 storage
 app.use(express.static('public')) //middleware - get request for '/' runs through public folder
 app.use(bodyParser.json()) //middleware - runs req to break out body into readable format
 // set up a route to redirect http to https
-app.use((req, res, next) => {  
+app.get('/', (req, res, next) => {  
     res.redirect('https://' + req.headers.host + req.url);
     next()
     // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
