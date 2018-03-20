@@ -12,7 +12,7 @@ app.use(bodyParser.json()) //middleware - runs req to break out body into readab
 // set up a route to redirect http to https
 app.use((req, res, next) => {  
     res.redirect('https://' + req.headers.host + req.url);
-
+    next()
     // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
     // res.redirect('https://palette-picker-bruce.herokuapp.com/' + req.url);
 })
