@@ -7,6 +7,8 @@ const database = require('knex')(configuration) //curry to grab correct database
 
 app.locals.projects = [] //stage1 storage
 
+app.use(express.static('public')) //middleware - get request for '/' runs through public folder
+app.use(bodyParser.json()) //middleware - runs req to break out body into readable format
 // set up a route to redirect http to https
 app.use((req, res, next) => {  
     res.redirect('https://' + req.headers.host + req.url);
@@ -15,8 +17,6 @@ app.use((req, res, next) => {
     // res.redirect('https://palette-picker-bruce.herokuapp.com/' + req.url);
 })
 
-app.use(express.static('public')) //middleware - get request for '/' runs through public folder
-app.use(bodyParser.json()) //middleware - runs req to break out body into readable format
 
 app.set('port', process.env.PORT || 3000) //sets port to specified, defaults 3000
 
