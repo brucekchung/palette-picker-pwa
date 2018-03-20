@@ -7,6 +7,14 @@ const database = require('knex')(configuration) //curry to grab correct database
 
 app.locals.projects = [] //stage1 storage
 
+// set up a route to redirect http to https
+app.get('*', function(req, res) {  
+    res.redirect('https://' + req.headers.host + req.url);
+
+    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+    // res.redirect('https://example.com' + req.url);
+})
+
 app.use(express.static('public')) //middleware - get request for '/' runs through public folder
 app.use(bodyParser.json()) //middleware - runs req to break out body into readable format
 
@@ -80,7 +88,7 @@ app.delete('/api/v1/palettes', (req, res) => { //delete endpt for palettes
       res.status(202) //happy
     })
     .catch(error => {
-      res.status(500).json({ error }) /sad
+      res.status(500).json({ error }) //sad
     })
 })
 
