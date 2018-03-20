@@ -8,7 +8,7 @@ const database = require('knex')(configuration) //curry to grab correct database
 app.locals.projects = [] //stage1 storage
 
 // set up a route to redirect http to https
-app.use((req, res) => {  
+app.use((req, res, next) => {  
     res.redirect('https://' + req.headers.host + req.url);
 
     // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
