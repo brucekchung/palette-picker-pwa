@@ -5,17 +5,26 @@ const environment = process.env.NODE_ENV || 'development' //sets environment to 
 const configuration = require('./knexfile')[environment] //grabs correct setup from knexfile
 const database = require('knex')(configuration) //curry to grab correct database 
 
+const requireHTTPS = (req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+    next();
+};
+
+
 app.locals.projects = [] //stage1 storage
 
 app.use(express.static('public')) //middleware - get request for '/' runs through public folder
 app.use(bodyParser.json()) //middleware - runs req to break out body into readable format
+if (process.env.NODE_ENV === 'production') { app.use(requireHTTPS); }
 // set up a route to redirect http to https
-app.get('/', (req, res, next) => {  
-    res.redirect('https://' + req.headers.host + req.url);
-    next()
-    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
-    // res.redirect('https://palette-picker-bruce.herokuapp.com/' + req.url);
-})
+// app.get('/', (req, res, next) => {  
+//     res.redirect('https://' + req.headers.host + req.url);
+//     next()
+//     // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+//     // res.redirect('https://palette-picker-bruce.herokuapp.com/' + req.url);
+// })
 
 
 app.set('port', process.env.PORT || 3000) //sets port to specified, defaults 3000
