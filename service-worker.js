@@ -3,12 +3,12 @@ this.addEventListener('install', event => {
     caches.open('assets-v1').then(cache => {
       return cache.addAll([
         '/',
-        '/app.js',
-        '/bundle.js',
-        '/css/app.css',
-        '/img/logo.png',
-        '/lib/jquery-3.2.1.js',
-        '/lib/markdown-it.min.js'
+        '/js/script.js',
+        '/js/jquery.min.js',
+        '/css/style.css',
+        '/assets/locked.svg',
+        '/assets/unlocked.svg',
+        '/assets/trash.png'
       ])
     })
   );
